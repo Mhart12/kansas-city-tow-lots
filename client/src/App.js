@@ -58,6 +58,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <Toolbar />
+        <p>Hello, World!</p>
         <p> {this.state.response} </p>
         <Button onClick={this.handleShow} bsStyle="primary"> Click Here </Button>
       </div>
