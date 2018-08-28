@@ -1,11 +1,11 @@
-### Available Data
-https://data.kcmo.org/Traffic/Kansas-City-Monthly-Car-Auction/2uje-k9n5
+## Prerequisites
+#### NodeJS
+https://nodejs.org/en/
 
-### Available Photos
-http://oaiauctions.hibid.com/
+#### MySQL
+https://www.mysql.com/
 
-### Installing
-
+## Installing
 Clone the repository
 
 ```
@@ -22,16 +22,32 @@ npm install
 
 ## Local Development
 
-1. Node server in the root directory
-2. React UI in client folder
+1. Hook up to MySQL
+2. Node server in the root directory
+3. React UI in client folder
 
-Run the server in terminal
+Update server/index.js file to link to your MySQL server
+
+```
+let user = process.env.production_user || "root" // replace root with your username
+let password = process.env.production_password || "root" // replace root with your password
+```
+
+Run the server in the terminal
 ```
 node server/index.js
+// or
+nodemon server/index.js
 ```
 
-And in a separate terminal run the React app
+In a separate terminal run the React App
 ```
 cd client
 npm start
 ```
+
+### Available Data
+https://data.kcmo.org/Traffic/Kansas-City-Monthly-Car-Auction/2uje-k9n5
+
+### Available Photos
+http://oaiauctions.hibid.com/

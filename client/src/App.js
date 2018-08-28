@@ -1,67 +1,21 @@
 import React, { Component } from 'react';
-import './App.css';
-import Toolbar from './components/Toolbar'
-import { Alert, Button } from 'react-bootstrap';
-import axios from 'axios'
+import { Switch, Route } from 'react-router-dom';
+import Home from './components/Pages/Home/Home';
+import Login from './components/Pages/Login/Login';
+import Auction from './components/Pages/Auction/Auction';
+import Registration from './components/Pages/Registration/Registration';
+import Error from './components/Pages/Error/Error'
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleDismiss = this.handleDismiss.bind(this);
-    this.handleShow = this.handleShow.bind(this);
-
-    this.state = {
-      show: false,
-      response: ''
-    };
-  }
-
-  handleDismiss() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: !this.state.show });
-  }
-
-  componentDidMount() {
-    axios.get('/api/hello')
-      .then((response) => {
-        this.setState({ response: response.data.express })
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
-
   render() {
-
-    if (this.state.show) {
-      return (
-        <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-          <h4>Oh snap! You got an error!</h4>
-          <p>
-            Change this and that and try again. Duis mollis, est non commodo
-            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-            Cras mattis consectetur purus sit amet fermentum.
-          </p>
-          <p>
-            <Button bsStyle="danger">Take this action</Button>
-            <span> or </span>
-            <Button onClick={this.handleDismiss}>Hide Alert</Button>
-          </p>
-        </Alert>
-      );
-    }
-
     return (
-      <div className="App">
-        <Toolbar />
-        <p>Hello, World!</p>
-        <p> {this.state.response} </p>
-        <Button onClick={this.handleShow} bsStyle="primary"> Click Here </Button>
-      </div>
-    );
+      <Switch>
+        <Route exact path='/' component={Home}/>
+        <Route path='/login' component={Login}/>
+        <Route path='/auction' component={Auction}/>
+        <Route path='/registration' component={Registration} />
+        <Route component={Error} />
+      </Switch>
+    )
   }
 }
