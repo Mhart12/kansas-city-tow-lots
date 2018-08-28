@@ -1,0 +1,30 @@
+.VehicleCard {
+  border: 1px solid #d3d3d3;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: white;
+  overflow: hidden;
+  font-family: 'Roboto', serif;
+}
+
+.VehicleCard h5 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.VehicleInformation {
+  float: left;
+  padding: 5px;
+  margin: 0px;
+  text-align: left;
+}
+
+.Buttons {
+  float: right;
+}
+
+#frontPhoto, #backPhoto {
+  width: 100%;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+}
