@@ -127,43 +127,56 @@ connection.query('USE mydb', (err) => {
 
 // return vehicles data to display on frontend
 app.post('/current_vehicles', (req, res) => {
-  if (req.body.make !== '' && req.body.year !== '') {
-    connection.query('SELECT * FROM current_vehicles WHERE make= ? AND year= ?', [req.body.make, req.body.year], (err, results) => {
-      if (err) throw err;
-      res.send(results)
-    });
-  } else if (req.body.year === '' && req.body.make !== '') {
-    connection.query('SELECT * FROM current_vehicles WHERE make= ?', [req.body.make], (err, results) => {
-      if (err) throw err;
-      res.send(results)
-    });
-  } else if (req.body.make === '' && req.body.year !== '' ){
-    connection.query('SELECT * FROM current_vehicles WHERE year= ?', [req.body.year], (err, results) => {
-      if (err) throw err;
-      res.send(results)
-    });
-  } else if (req.body.model !== '') {
-    connection.query('SELECT * FROM current_vehicles WHERE model= ?', [req.body.model], (err, results) => {
-      if (err) throw err;
-      res.send(results)
-    });
-  } else if (req.body.reason !== '') {
-    connection.query('SELECT * FROM current_vehicles WHERE reason= ?', [req.body.reason], (err, results) => {
-      if (err) throw err;
-      res.send(results)
-    });
-  } else if (req.body.key !== '') {
-    connection.query(`SELECT * FROM current_vehicles WHERE k= ?`, [req.body.key], (err, results) => {
-      if (err) throw err;
-      res.send(results)
-    });
-  } else {
-    // if no search items are selected / onload display all vehicles
-    connection.query('SELECT * FROM current_vehicles', (err, results) => {
-      if (err) throw err;
-      res.send(results)
-    })
+  let reqOptions = {
+    make: req.body.make,
+    model: req.body.model,
+    reason: req.body.reason,
+    year: req.body.year,
+    key: req.body.key
+  };
+
+  const buildConditions = params => {
+    let conditions = [];
+    let values = [];
+
+    if (typeof params.year !== 'undefined') {
+      conditions.push("year = ?");
+      values.push(params.year);
+    }
+
+    if (typeof params.make !== 'undefined') {
+      conditions.push("make = ?");
+      values.push(params.make);
+    }
+
+    if (typeof params.model !== 'undefined') {
+      conditions.push("model = ?");
+      values.push(params.model);
+    }
+
+    if (typeof params.reason !== 'undefined') {
+      conditions.push("reason = ?");
+      values.push(params.reason);
+    }
+
+    if (typeof params.key !== 'undefined') {
+      conditions.push("k = ?");
+      values.push(params.key);
+    }
+
+    return {
+      where: conditions.length ? conditions.join(' AND ') : '1',
+      values: values
+    };
   }
+
+  let conditions = buildConditions(reqOptions);
+  let sql = 'SELECT * FROM current_vehicles WHERE ' + conditions.where;
+
+  connection.query(sql, conditions.values, (err, results) => {
+    if (err) throw err;
+    res.send(results)
+  });
 })
 
 // return bookmarked vehicles
