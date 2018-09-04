@@ -12,11 +12,11 @@ export default class Search extends Component {
       searchQuery: [],
       data: [],
       loading: true,
-      year: '',
-      make: '',
-      model: '',
-      reason: '',
-      key: ''
+      year: undefined,
+      make: undefined,
+      model: undefined,
+      reason: undefined,
+      key: undefined
     }
   }
 
@@ -57,6 +57,22 @@ export default class Search extends Component {
   render() {
 
     const { searchQuery } = this.state;
+
+    if (this.state.year === '') {
+      this.setState({ year: undefined });
+    }
+    if (this.state.make === '') {
+      this.setState({ make: undefined });
+    }
+    if (this.state.model === '') {
+      this.setState({ model: undefined });
+    }
+    if (this.state.reason === '') {
+      this.setState({ reason: undefined });
+    }
+    if (this.state.key === '') {
+      this.setState({ key: undefined });
+    }
 
     // create of array of available arrays and sort biggest to smallest
     let years = searchQuery.map((e, key) => e.year)
