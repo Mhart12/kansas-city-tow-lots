@@ -36,7 +36,7 @@ connection.query('CREATE DATABASE IF NOT EXISTS mydb', (err) => {
       tow_reference varchar(255),
       vin varchar(255),
       lot varchar(255),
-      k varchar(255),
+      car_keys varchar(255),
       comments varchar(255),
       front_pic varchar(255),
       back_pic varchar(255))`, (err, results) => {
@@ -67,7 +67,7 @@ setTimeout(() => {
                   tow_reference,
                   vin,
                   lot,
-                  k,
+                  car_keys,
                   comments,
                   front_pic,
                   back_pic)
@@ -128,40 +128,24 @@ connection.query('USE mydb', (err) => {
 // return vehicles data to display on frontend
 app.post('/current_vehicles', (req, res) => {
   let reqOptions = {
+    year: req.body.year,
     make: req.body.make,
     model: req.body.model,
     reason: req.body.reason,
-    year: req.body.year,
-    key: req.body.key
+    car_keys: req.body.car_keys
   };
+
+  console.log(reqOptions)
 
   const buildConditions = params => {
     let conditions = [];
     let values = [];
 
-    if (typeof params.year !== 'undefined') {
-      conditions.push("year = ?");
-      values.push(params.year);
-    }
-
-    if (typeof params.make !== 'undefined') {
-      conditions.push("make = ?");
-      values.push(params.make);
-    }
-
-    if (typeof params.model !== 'undefined') {
-      conditions.push("model = ?");
-      values.push(params.model);
-    }
-
-    if (typeof params.reason !== 'undefined') {
-      conditions.push("reason = ?");
-      values.push(params.reason);
-    }
-
-    if (typeof params.key !== 'undefined') {
-      conditions.push("k = ?");
-      values.push(params.key);
+    for (let key in params) {
+      if (typeof params[key] !== 'undefined') {
+        conditions.push(`${key} = ?`);
+        values.push(params[key]);
+      }
     }
 
     return {

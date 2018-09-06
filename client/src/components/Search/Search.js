@@ -16,7 +16,7 @@ export default class Search extends Component {
       make: undefined,
       model: undefined,
       reason: undefined,
-      key: undefined
+      car_keys: undefined
     }
   }
 
@@ -33,16 +33,16 @@ export default class Search extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { year, make, model, reason, key } = this.state;
+    const { year, make, model, reason, car_keys } = this.state;
 
-    axios.post('/current_vehicles', { year, make, model, reason, key })
+    axios.post('/current_vehicles', { year, make, model, reason, car_keys })
       .then(res => {
         this.setState({data: res.data.sort((a,b) => a.lot - b.lot )});
       })
   }
 
   componentWillMount() {
-    axios.get('https://data.kcmo.org/resource/xpwx-fzzw.json')
+    axios.post('/current_vehicles')
       .then(({data})=> {
         this.setState({
           data: data.sort((a,b) => a.lot - b.lot),
@@ -70,8 +70,8 @@ export default class Search extends Component {
     if (this.state.reason === '') {
       this.setState({ reason: undefined });
     }
-    if (this.state.key === '') {
-      this.setState({ key: undefined });
+    if (this.state.car_keys=== '') {
+      this.setState({ car_keys: undefined });
     }
 
     // create of array of available arrays and sort biggest to smallest
@@ -143,8 +143,8 @@ export default class Search extends Component {
             </FormGroup>{' '}
 
             <FormGroup controlId="formControlsSelect">
-              <ControlLabel> Key </ControlLabel>{' '}
-              <FormControl componentClass="select" name="key" placeholder="select" onChange={this.handleProp('key').bind(this)}>
+              <ControlLabel> Keys </ControlLabel>{' '}
+              <FormControl componentClass="select" name="key" placeholder="select" onChange={this.handleProp('car_keys').bind(this)}>
                 <option value=""> </option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>

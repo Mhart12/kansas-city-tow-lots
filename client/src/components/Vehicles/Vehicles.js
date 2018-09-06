@@ -61,7 +61,7 @@ export default class Vehicles extends Component {
                       tow_reference = {e.tow_reference}
                       vehicle_id = {e.vehicle_id}
                       comments = {e.comments}
-                      keys = {e.k}
+                      car_keys = {e.k}
                       front_pic = {e.front_pic}
                       back_pic = {e.back_pic} />
                   </Col>

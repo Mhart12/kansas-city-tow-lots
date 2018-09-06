@@ -27,16 +27,16 @@ export default class VehicleCard extends Component {
        <img
         id="frontPhoto"
         alt="frontPhoto"
-        src={"http://www.suusigmachi.com/uploads/2/5/8/5/25853504/s717179518631806229_p1_i3_w400.jpeg"}
+        src={this.props.front_pic}
         onClick={this.handleShow.bind(this)} />
         <div className="VehicleInformation">
           <p> Lot: {this.props.lot} </p>
           <p> Reason: {this.props.reason} </p>
-          <p> Keys: {this.props.keys === 'K' ? 'Yes' : 'No'} </p>
+          <p> Keys: {this.props.car_keys === 'K' ? 'Yes' : 'No'} </p>
           <p> VIN: {this.props.vin}</p>
         </div>
         <div className="Buttons">
-          <Button> Click This! </Button>
+          <Button> Save </Button>
         </div>
 
         <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
@@ -47,7 +47,7 @@ export default class VehicleCard extends Component {
             <img
              id="backPhoto"
              alt="backPhoto"
-             src={"http://www.suusigmachi.com/uploads/2/5/8/5/25853504/s717179518631806229_p1_i3_w400.jpeg"} />
+             src={this.props.back_pic} />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose.bind(this)}>Close</Button>

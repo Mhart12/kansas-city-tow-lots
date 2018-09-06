@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import moment from 'moment';
 import './AuctionDate.css'
 
-export default class AuctionDate extends React.Component {
+export default class AuctionDate extends Component {
   render() {
 
     let currentYear = moment().year();
